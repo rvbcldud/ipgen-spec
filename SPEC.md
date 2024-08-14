@@ -59,13 +59,13 @@ IPv4 addresses are calculated using the same method as IPv6 addresses. We simply
 Here are the steps that tools that implement this spec need to follow to generate IPv4 addresses:
 
 1. Follow steps 1 and 2 in the [IPv6 Addresses](#ipv6-addresses) section.
-2. Validate that the network prefix is less that 32, returning immediately with an error if it isn't. In such a case we only have 2 choices, return the same IP address or return an error since this prefix states that this is already a complete IP address. This spec chooses the latter as it helps detect mistakes.
+2. Validate that the network prefix is less than or equal to  32, returning immediately with an error if it isn't. If it is equal to 32, return the network address itself.
 3. Calculate `IP6_PREFIX` by subtracting 32 from 128 and then adding back the IPv4 prefix supplied.
 4. Convert the IPv4 address to a [Ipv4-mapped IPv6 address](https://en.wikipedia.org/wiki/IPv6#IPv4-mapped_IPv6_addresses)
 5. Use the newly created prefix and address to create an IPv6 network address.
-5. Follow steps 4 to 10 in the [IPv6 Addresses](#ipv6-addresses) section.
-6. Convert the IPv4-mapped IPv6 address back to an IPv4 address.
-7. Return the IP address representation as a native IPv4 object of their
+6. Follow steps 4 to 10 in the [IPv6 Addresses](#ipv6-addresses) section.
+7. Convert the IPv4-mapped IPv6 address back to an IPv4 address.
+8. Return the IP address representation as a native IPv4 object of their
    programming langauge so other tools can work with it easily.
 
 [CIDR notation]: https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation
