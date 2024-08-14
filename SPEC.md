@@ -63,7 +63,7 @@ Here are the steps that tools that implement this spec need to follow to generat
 3. Calculate `IP6_PREFIX` by subtracting 32 from 128 and then adding back the IPv4 prefix supplied.
 4. Convert the IPv4 address to a [Ipv4-mapped IPv6 address](https://en.wikipedia.org/wiki/IPv6#IPv4-mapped_IPv6_addresses)
 5. Use the newly created prefix and address to create an IPv6 network address.
-6. Follow steps 4 to 10 in the [IPv6 Addresses](#ipv6-addresses) section.
+6. Follow steps 4 to 10 in the [IPv6 Addresses](#ipv6-addresses) section, using said IPv6 network address.
 7. Convert the IPv4-mapped IPv6 address back to an IPv4 address.
 8. Return the IP address representation as a native IPv4 object of their
    programming langauge so other tools can work with it easily.
