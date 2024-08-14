@@ -37,18 +37,18 @@ Here are the steps that tools that implement this spec need to follow to generat
 5. Create `NETWORK_HASH` as a bit representation of the network address (`u128`).
 6. Compute `ADDRESS_LENGTH` by subtracting `NETWORK_LEN` from 128.
 7. Compute `ADDRESS_HASH` by generating a `blake2b` hash of the `NAME` using
-   `ADDRESS_LEN`
+   `ADDRESS_LEN`.
    - Since `ADDRESS_LEN` is in bits, you must compute the corresponding amount
    of bytes that need to be generated from a `blake2b` hash by dividing it by 8
-   and adding 1 if it is not evenly divisible by 8 (e.g., in Rust: `(bits / 8) + (bits % 8 != 0)`)
+   and adding 1 if it is not evenly divisible by 8 (e.g., in Rust: `(ADDRESS_LEN / 8) + (ADDRESS_LEN % 8 != 0)`).
    - Once the correct amount of bytes has been generated, convert the
    collection of bytes to a singular bit representation (`u128`), zeroing out
    any additional bits generated.
-       - E.g., If the `ADDRESS_LENGTH` was 7, 2 bytes would have to be generated.
+       - E.g., If the `ADDRESS_LENGTH` was 7, 1 byte would have to be generated.
        However, this results in an extra bit that would need to be zeroed out.
 8. Create `IP_HASH` by calculating the bitwise OR (`|`) of `NETWORK_HASH` and
-   `ADDRESS_HASH`
-9. Return the IP address representing of the previous bit representation
+   `ADDRESS_HASH`.
+9. Return the IP address representation of the previous bit representation
    (`IP_HASH`). Libraries should return this as a native IPv6 object of their
    programming language so other tools can work with it easily.
 
@@ -62,10 +62,10 @@ Here are the steps that tools that implement this spec need to follow to generat
 2. Validate that the network prefix is less that 32, returning immediately with an error if it isn't. In such a case we only have 2 choices, return the same IP address or return an error since this prefix states that this is already a complete IP address. This spec chooses the latter as it helps detect mistakes.
 3. Calculate `IP6_PREFIX` by subtracting 32 from 128 and then adding back the IPv4 prefix supplied.
 4. Convert the IPv4 address to a [Ipv4-mapped IPv6 address](https://en.wikipedia.org/wiki/IPv6#IPv4-mapped_IPv6_addresses)
-5. Use the newly created prefix and address to create an IPv6 network address
+5. Use the newly created prefix and address to create an IPv6 network address.
 5. Follow steps 4 to 10 in the [IPv6 Addresses](#ipv6-addresses) section.
-6. Convert the IPv4-mapped IPv6 address back to an IPv4 address
+6. Convert the IPv4-mapped IPv6 address back to an IPv4 address.
 7. Return the IP address representation as a native IPv4 object of their
-   programming langauge so other tools can work with it easily
+   programming langauge so other tools can work with it easily.
 
 [CIDR notation]: https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation
